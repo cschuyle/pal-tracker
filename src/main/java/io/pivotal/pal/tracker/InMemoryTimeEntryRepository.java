@@ -3,7 +3,6 @@ package io.pivotal.pal.tracker;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class InMemoryTimeEntryRepository implements TimeEntryRepository {
 
     private final List<TimeEntry> timeEntries = new ArrayList<>();
