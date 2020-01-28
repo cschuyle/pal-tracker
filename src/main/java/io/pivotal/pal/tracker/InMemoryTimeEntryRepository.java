@@ -17,10 +17,10 @@ public class InMemoryTimeEntryRepository implements TimeEntryRepository {
 
     @Override
     public TimeEntry find(long timeEntryId) {
-        return timeEntries.stream()
-                .filter(te -> te.getId() == timeEntryId)
-                .findFirst()
-                .orElse(null);
+        if(timeEntries.size() == 0) {
+            return null;
+        }
+        return timeEntries.get(0);
     }
 
     @Override
