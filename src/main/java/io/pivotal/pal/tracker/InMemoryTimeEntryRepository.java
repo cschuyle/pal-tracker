@@ -11,15 +11,7 @@ public class InMemoryTimeEntryRepository implements TimeEntryRepository {
     @Override
     public TimeEntry create(TimeEntry timeEntry) {
         ++seq;
-        timeEntries.add(
-                new TimeEntry(
-                        seq,
-                        timeEntry.getProjectId(),
-                        timeEntry.getUserId(),
-                        timeEntry.getDate(),
-                        timeEntry.getHours()
-                )
-        );
+        timeEntries.add(newTimeEntry(timeEntry, seq));
         return find(seq);
     }
 
@@ -38,24 +30,26 @@ public class InMemoryTimeEntryRepository implements TimeEntryRepository {
 
     @Override
     public TimeEntry update(long id, TimeEntry timeEntry) {
-        if(find(id) == null) {
+        if (find(id) == null) {
             return null;
         }
         delete(id);
-        timeEntries.add(
-                new TimeEntry(
-                        id,
-                        timeEntry.getProjectId(),
-                        timeEntry.getUserId(),
-                        timeEntry.getDate(),
-                        timeEntry.getHours()
-                )
-        );
+        timeEntries.add(newTimeEntry(timeEntry, id));
         return find(id);
     }
 
     @Override
     public void delete(long timeEntryId) {
         timeEntries.clear();
+    }
+
+    private TimeEntry newTimeEntry(TimeEntry timeEntry, long seq) {
+        return new TimeEntry(
+                seq,
+                timeEntry.getProjectId(),
+                timeEntry.getUserId(),
+                timeEntry.getDate(),
+                timeEntry.getHours()
+        );
     }
 }
